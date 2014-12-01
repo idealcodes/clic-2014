@@ -1,5 +1,4 @@
 # Dependencies
-markdown:         redcarpet
 highlighter:      pygments
 
 # Permalinks
@@ -7,20 +6,25 @@ permalink:        pretty
 relative_permalinks: true
 
 # Setup
-title:            Hyde
-tagline:          'A Jekyll theme'
-description:      'A brazen two-column <a href="http://jekyllrb.com" target="_blank">Jekyll</a> theme that pairs a prominent sidebar with uncomplicated content. Made by <a href="https://twitter.com/mdo" target="_blank">@mdo</a>.'
-url:              http://hyde.getpoole.com
-baseurl:          /
+title:            CLIC 2014
+tagline:          'December 10, 2014 · UVSQ'
+description:      'Codes, Lattices, Ideals, Cryptography.'
+url:              http://idealcodes.github.io/clic-2014
+baseurl:          /clic-2014
 
 author:
-  name:           'Mark Otto'
-  url:            https://twitter.com/mdo
+  name:           'Idealcodes'
+  url:            https://idealcodes.github.io/
 
-paginate:         5
+collections:
+  abstracts:
+    output: true
+    permalink: /abstract/:path.html
+  
+#paginate:         5
 
 # Custom vars
-version:          2.1.0
+version:          0.1.0
 
 github:
-  repo:           https://github.com/poole/hyde
+  repo:           https://github.com/idealcodes/clic-2014
