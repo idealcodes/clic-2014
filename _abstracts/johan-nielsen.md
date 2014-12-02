@@ -20,7 +20,7 @@ We achieve this by embedding the core function field equation into multiple
 equations over F[x], F being the base field of the code. The resulting problem
 becomes a generalised Padé approximation over F[x], which can be solved by
 finding a "short" vector in an explicitly given F[x] lattice. This in turn can
-be found using recent methods from algebra, though the notion of "short"
+be found using recent methods from computer algebra, though the notion of "short"
 involves some extra difficulties.
 
 Our method applies to two approaches of decoding beyond half the minimum
