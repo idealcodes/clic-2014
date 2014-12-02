@@ -16,14 +16,8 @@ The morning session features introductory talks intended for the
 general public. The afternoon sessions will deal with more specialized
 topics.
 
-|9:30–10am   | Coffee break
-|10–11am     | Francisco Vial-Prado<br/> *TBA*.
-|11–12am     | [Luca De Feo](http://defeo.lu)<br/> *Coppersmith's algorithm*.
-|12am–2pm    | Lunch break @[restaurant Le Valmont](http://levalmont.com/).
-|2–3pm       | [Jean-François Biasse](http://www.lix.polytechnique.fr/Labo/Jean-Francois.Biasse/)<br/> *TBA*.
-|3–4pm       | [Johan Nielsen](http://jsrn.dk/)<br/> *Fast Decoding of Hermitian Codes Using F[x]-Lattice Basis Reduction*.
-|4–4:30pm    | Coffee break
-|4:30–5:30pm | [Romain Lebreton](http://www.lirmm.fr/~lebreton/)<br/> *Crash course on Order Bases : Theory and Algorithms*.
+{% include schedule.html %}
+
 
 ## Location
 

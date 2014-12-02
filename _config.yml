@@ -18,7 +18,6 @@ author:
 
 collections:
   abstracts:
-    output: true
     permalink: /abstract/:path.html
   
 #paginate:         5

@@ -1,0 +1,17 @@
+<table><tbody>
+    {% for slot in site.data.schedule %}
+    <tr>
+      <td>{{ slot.time }}</td>
+      <td>
+	{% if slot.talk %}
+	  {% for abs in site.abstracts %}{% if abs.author == slot.talk %}
+	  <a href="{{ abs.website }}">{{ abs.author }}</a> ({{ abs.affiliation }})<br/>
+	  <a href="abstracts/#{{ abs.author }}">{{ abs.title }}</a>
+	  {% endif %}{% endfor %}
+	{% else %}
+	  {{ slot.desc }}
+	{% endif %}
+      </td>
+    </tr>
+    {% endfor %}
+</tbody></table>
