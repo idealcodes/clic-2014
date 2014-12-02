@@ -1,6 +1,6 @@
 ---
 layout: default
-title: 
+title: Home
 ---
 
 <h1>CLIC 2014 <small>– December 10, 2014</small><br/>
@@ -29,3 +29,11 @@ Yvelines. [How to get there](https://www.prism.uvsq.fr/index.php?option=com_cont
 
 There is no registration fee, but please drop a line to
 [the organizers](http://defeo.lu) if you wish to come.
+
+## Sponsors
+
+This seminar is sponsored by the Digiteo program
+[*"invités"*](http://www.digiteo.fr/-Presentation-du-Programme-Invites-),
+and by the CNRS
+[*chaires*](https://www.dgdr.cnrs.fr/drhchercheurs/concoursch/chaires/default-fr.htm)
+program.
