@@ -25,5 +25,5 @@ involves some extra difficulties.
 
 Our method applies to two approaches of decoding beyond half the minimum
 distance: Guruswami-Sudan and Power decoding. In this talk, however, we will
-focus in the embedding into an F[x] problem and therefore discuss only the
-decoding up to half the minimum distance (minus half the genus).
+focus on how we embed the function field problem into F[x], and therefore we
+discuss only decoding up to half the minimum distance (minus half the genus).
