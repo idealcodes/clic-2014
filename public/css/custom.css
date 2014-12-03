@@ -1,0 +1,23 @@
+/* Abstracts styling */
+.post-title a:hover:before {
+    content: "§";
+    position: absolute;
+    margin-left: -1.5ex;
+}
+.content p {
+    text-align: justify;
+}
+
+/* Color theme */
+.theme-base-10 .sidebar {
+    background-color: rgb(46,131,125);
+}
+.theme-base-10 .content a,
+.theme-base-10 .related-posts li a:hover {
+    color: rgb(46,131,125);
+}
+
+/* More sidebar styling */
+.sidebar-nav-hashes {
+    margin-left: 2ex;
+}

@@ -3,7 +3,7 @@
 
   {% include head.html %}
 
-  <body>
+  <body class="theme-base-10">
 
     {% include sidebar.html %}
 
@@ -11,5 +11,15 @@
       {{ content }}
     </div>
 
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        config: ["MMLorHTML.js"],
+        jax: ["input/TeX","output/HTML-CSS","output/NativeMML"],
+        TeX: {
+          extensions: ["AMSmath.js","AMSsymbols.js"],
+        }
+      });
+    </script>
+    <script src="//cdn.mathjax.org/mathjax/latest/MathJax.js"></script>
   </body>
 </html>
