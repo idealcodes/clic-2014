@@ -2,7 +2,7 @@
 layout: abstract
 title: How ideal lattices unlocked fully homomorphic encryption
 author: Francisco Vial-Prado
-website:
+website: '#'
 affiliation: UVSQ
 ---
 
