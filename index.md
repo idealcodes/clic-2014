@@ -21,8 +21,9 @@ topics.
 
 ## Location
 
-Room ???, Laboratoire PRiSM, Université de Versailles – Saint-Quentin
-en
+*Archimède* room (ground floor, GPS
+[48.8129,2.1488](http://www.openstreetmap.org/?mlat=48.8129&mlon=2.1488&zoom=19)),
+Laboratoire PRiSM, Université de Versailles – Saint-Quentin en
 Yvelines. [How to get there](https://www.prism.uvsq.fr/index.php?option=com_content&view=article&id=4&Itemid=107).
 
 ## Registration
