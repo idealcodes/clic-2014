@@ -1,5 +1,5 @@
 /* Abstracts styling */
-.post-title a:hover:before {
+.post-title>a:hover:before {
     content: "§";
     position: absolute;
     margin-left: -1.5ex;
