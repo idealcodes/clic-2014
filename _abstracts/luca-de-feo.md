@@ -3,6 +3,7 @@ layout: abstract
 title: Coppersmith's method and generalizations
 author: Luca De Feo
 affiliation: UVSQ
+slides: slides/luca-de-feo/
 website: http://defeo.lu/
 ---
 
