@@ -8,6 +8,11 @@
     text-align: justify;
 }
 
+.post .resources {
+    float: right;
+    font-size: 60%;
+}
+
 /* Color theme */
 .theme-base-10 .sidebar {
     background-color: rgb(46,131,125);

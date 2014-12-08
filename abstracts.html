@@ -10,6 +10,14 @@ title: Abstracts
       <a href="#{{ post.author }}">{{ post.title }}</a>
       <br/>
       <small>by <a href="{{ post.website }}">{{ post.author }}</a></small>
+      <span class="resources">
+      {% if post.slides %}
+      [<a href="{{ post.slides }}">slides</a>]
+      {% endif %}
+      {% if post.video %}
+      [<a href="{{ post.video }}">video</a>]
+      {% endif %}
+      </span>
     </h2>
 
     {{ post.content }}
