@@ -2,6 +2,7 @@
 layout: slides
 title: Coppersmith's method and generalizations · Luca De Feo
 ---
+class: middle, center
 
 # Coppersmith's method and generalizations
 
@@ -9,31 +10,166 @@ title: Coppersmith's method and generalizations · Luca De Feo
 
 December 10, 2014, [CLIC 2014](http://idealcodes.github.io/clic-2014)
 
+<small>
+![Creative Commons Licence](https://i.creativecommons.org/l/by/4.0/80x15.png)
+[CC BY 4.0](http://creativecommons.org/licenses/by/4.0/)
+</small>
+
 ---
 
 # Reminder on lattices
 
-A lattice is a subgroup of $ℤ^n$ of rank $n$.
+A lattice in $ℝ^n$ is a *discrete subgroup* of $ℝ^n$ of rank $n$.
 
-Nice picture here.
+[Nice picture here]
+
+A lattice is also
+
+- An **abelian group**,
+- A free **$ℤ$-module** of rank $n$.
 
 ---
 
 # Lattice reduction
 
+Endow $ℝ^n$ with the $ℓ_2$ norm
 
+$$|v|\_2 = \sqrt{\sum\_{i=1}^n|v\_i|^2}$$
+
+**Fundamental problem:** find *shortest* vectors (by the $ℓ_2$ norm).
+
+--
+
+### Fundamental tool: LLL <small>(Lenstra–Lenstra–Lovász)</small>
+
+**Input:** A lattice $Λ ⊂ ℝ^n$ given by a basis.  
+**Output:** A nonzero *somewhat short* vector $v ∈ Λ$ satisfying
+
+$$|v|_2 ≤ 2^{(n-1)/4} \det(L)^{1/n}.$$
+
+**Complexity:** polynomial-time.
+
+???
+
+In place of 2: anything > 4/3
 
 ---
 
-# Finding small roots
+# Small roots of modular equations
+
+**Input**
+
+- $f$ be a polynomial of degree $d$,
+- $N$ an integer (of *unknown factorization*).
+
+**Output:** All *small integers* $w$ such that *$f(w) = 0 \bmod N$*.
+
+### Coppersmith's theorem
+
+All $w$ such that *$|w| < N^{1/d}$* can be found in time polynomial in
+$\log N$ and $d$.
+
+---
+
+# Application: RSA with stereotyped messages
+
+Consider an RSA implementation with $N=pq$ and with *small public key*
+(e.g.: $k_p=3$).
+
+Suppose *a portion $B$* of the cleartext $m$ is *already known*, say
+the high-order bits, so that
+
+$$m = 2^aB + x$$
+
+with $|x|<N^{1/3}$ unknown. Then, finding the small roots of the
+equation
+
+$$c = m^3 = (2^aB+x)^3 \mod N$$
+
+recovers the ciphertext.
+
+???
+
+Obvious for B = 0.
 
 ---
 
 # Coppersmith's intuition
 
+Let $|w|<X$, and consider the lattice $Λ$ spanned by the rows of $M$:
+
+$$M = \begin{pmatrix}
+1 & 0 & 0 & \cdots & 0 & f_0\\\\
+0 & X^{-1} & 0 & \cdots & 0 & f_1\\\\
+0 & 0 & X^{-2} & \cdots & 0 & f_2\\\\
+0 & 0 & 0 & \cdots & X^{-d} & f_d\\\\
+1 & 0 & 0 & \cdots & 0 & N
+\end{pmatrix}$$
+
+If $w$ is a solution, then $f(w) = yN$ for some $y$, then
+
+$$s=(1,w,\dots,w^d,-y)M = \left(1,w/X,\dots,(w/X)^d,0\right)$$
+
+is in $Λ$ and $|s|<\sqrt{d+1}$. If $s$ is small enough, LLL may find
+it.
+
+**However this does not work well.**
+
 ---
 
-# Application 1: RSA with stereotyped messages
+# Coppersmith's algorithm
+
+**Idea:** find a *small polynomial* $g$ such that $g(w)=0$ in $ℤ$ for
+any *small solution* $w$ of $f \bmod N$.
+
+Fix parameters $h$ and $X$. Define
+
+$$g_{i,j}(x) = x^j N^{h-i} f^i(x) \qquad\qquad 0≤i<h, 0≤j<d.$$
+
+**Remark:** $N^h$ divides $g_{i,j}(w)$ for any root $w$ of $f$.
+
+---
+
+Consider the lattice $Λ$ spanned by the coefficients of *$g_{i,j}(x)$*:
+
+$$\begin{pmatrix}
+\\\\
+\\\\
+\\\\
+\\\\
+\\\\
+\\\\
+\\\\
+\\\\
+\end{pmatrix}$$
+
+Vectors in $Λ ⟷$ polynomials $g$ such that $N^{h-1} | g(w)$.
+
+---
+
+We want a polynomial $g$ to be small in the *lattice sense* when
+*$g(w)$ is small*.
+
+Consider the lattice spanned by the coefficients of *$g_{i,j}(xX)$*:
+
+$$\begin{pmatrix}
+\\\\
+\\\\
+\\\\
+\\\\
+\\\\
+\\\\
+\\\\
+\\\\
+\end{pmatrix}$$
+
+**Recall:**  $N^{h-1}|g(w)$
+
+Suppose that $w<X$, and $g$ is *small enough*, then $g(w) = 0$ in $ℤ$.
+
+---
+
+# Howegrawe-..., May
 
 ---
 
@@ -41,15 +177,8 @@ Nice picture here.
 
 ---
 
+
 # Other applications
-
----
-
-# Coppersmith's theorem
-
----
-
-# Howegrawe-..., May
 
 ---
 
@@ -65,11 +194,11 @@ Nice picture here.
 
 ---
 
-# Small elements in $\F_p(z)$
+# Small elements in $𝔽_p(z)$
 
 ---
 
-# Coppersmith's method for $\F_p(z)$
+# Coppersmith's method for $𝔽_p(z)$
 
 ---
 
@@ -85,5 +214,5 @@ Nice picture here.
 
 
 
-<!--  LocalWords:  Coppersmith's RSA bivariate
+<!--  LocalWords:  Coppersmith's RSA bivariate abelian
  -->
