@@ -3,6 +3,7 @@ layout: abstract
 title:  Fast Decoding of Hermitian Codes Using <script type="math/tex">𝔽[x]</script>-Lattice Basis Reduction
 author: Johan S. R. Nielsen
 website: http://jsrn.dk/
+slides: slides/jsrn_2014_12_clic_hermitian.svg
 affiliation: INRIA Saclay
 ---
 Joint work with Peter Beelen.
