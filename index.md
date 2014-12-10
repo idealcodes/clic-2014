@@ -26,6 +26,8 @@ topics.
 Laboratoire PRiSM, Université de Versailles – Saint-Quentin en
 Yvelines. [How to get there](https://www.prism.uvsq.fr/index.php?option=com_content&view=article&id=4&Itemid=107).
 
+{% gist 91065e318b07e31d90b0 %}
+
 ## Registration
 
 There is no registration fee, but please drop a line to
