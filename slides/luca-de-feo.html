@@ -45,7 +45,7 @@ $$|v|\_2 = \sqrt{\sum\_{i=1}^n|v\_i|^2}$$
 **Input:** A lattice $Λ ⊂ ℝ^n$ given by a basis.  
 **Output:** A nonzero *somewhat short* vector $v ∈ Λ$ satisfying
 
-$$|v|_2 ≤ 2^{(n-1)/4} \det(L)^{1/n}.$$
+$$|v|_2 ≤ 2^{(n-1)/4} \det(Λ)^{1/n}.$$
 
 **Complexity:** polynomial-time.
 
@@ -103,7 +103,7 @@ $$M = \begin{pmatrix}
 0 & X^{-1} & 0 & \cdots & 0 & f_1\\\\
 0 & 0 & X^{-2} & \cdots & 0 & f_2\\\\
 0 & 0 & 0 & \cdots & X^{-d} & f_d\\\\
-1 & 0 & 0 & \cdots & 0 & N
+0 & 0 & 0 & \cdots & 0 & N
 \end{pmatrix}$$
 
 If $w$ is a solution, then $f(w) = yN$ for some $y$, then
@@ -287,8 +287,7 @@ or, equivalently, if $\deg V$ is minimal among all bases of $V$.
 
 # Coppersmith's method for $k(z)$
 
-### Theorem (Alekhnovic, Bernstein, Boneh, Coppersmith, ...,
-    [Cohn–Heninger 2011](#references))
+### Theorem (Alekhnovic, Bernstein, Boneh, Coppersmith, ..., [Cohn–Heninger 2011](#references))
 
 Let $f(x)$ be a polynomial of degree $d$, with coefficients in
 $k[z]/N(z)$. Let $n=\deg_z N$. For any $0<β≤1$, all polynomials $w(z)$
