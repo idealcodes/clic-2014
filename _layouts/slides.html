@@ -3,18 +3,16 @@
   <head>
     <meta charset="utf-8">
     <title>{{ page.title }}</title>
-    <style type="text/css">
-      /* Slideshow styles */
-    </style>
+    <link rel="stylesheet" href="{{ site.baseurl }}/public/css/slides.css">
   </head>
   <body>
-    <textarea id="source">
-      {{ content }}
+    <textarea id="source" style="visibility:hidden">
+{{ content }}
     </textarea>
     <script type="text/javascript" src="http://remarkjs.com/downloads/remark-latest.min.js">
     </script>
     <script type="text/javascript">
-      var slideshow = remark.create();
+      var slideshow = remark.create({ 'ratio' : '16:10' });
     </script>
     <script type="text/x-mathjax-config">
       MathJax.Hub.Config({
@@ -28,6 +26,10 @@
         },
         TeX: {
           extensions: ["AMSmath.js","AMSsymbols.js"],
+        },
+        "HTML-CSS": {
+          scale: 110,
+          matchFontHeight: false,
         }
       });
     </script>

@@ -2,6 +2,7 @@
 layout: slides
 title: Coppersmith's method and generalizations · Luca De Feo
 ---
+class: middle, center
 
 # Coppersmith's method and generalizations
 
@@ -9,81 +10,410 @@ title: Coppersmith's method and generalizations · Luca De Feo
 
 December 10, 2014, [CLIC 2014](http://idealcodes.github.io/clic-2014)
 
+.license[
+![Creative Commons Licence](https://i.creativecommons.org/l/by/4.0/80x15.png)
+[CC BY 4.0](http://creativecommons.org/licenses/by/4.0/)
+]
+
 ---
 
 # Reminder on lattices
 
-A lattice is a subgroup of $ℤ^n$ of rank $n$.
+A lattice in $ℝ^n$ is a *discrete subgroup* of $ℝ^n$ of rank $n$.
 
-Nice picture here.
+.center[![](../Lattice-reduction.svg)]
+
+A lattice is also
+
+- An **abelian group**,
+- A free **$ℤ$-module** of rank $n$.
 
 ---
 
 # Lattice reduction
 
+Endow $ℝ^n$ with the $ℓ_2$ norm
 
+$$|v|\_2 = \sqrt{\sum\_{i=1}^n|v\_i|^2}$$
+
+**Fundamental problem:** find *shortest* vectors (by the $ℓ_2$ norm).
+
+--
+
+### Fundamental tool: LLL <small>(Lenstra–Lenstra–Lovász)</small>
+
+**Input:** A lattice $Λ ⊂ ℝ^n$ given by a basis.  
+**Output:** A nonzero *somewhat short* vector $v ∈ Λ$ satisfying
+
+$$|v|_2 ≤ 2^{(n-1)/4} \det(Λ)^{1/n}.$$
+
+**Complexity:** polynomial-time.
+
+???
+
+In place of 2: anything > 4/3
 
 ---
 
-# Finding small roots
+# Small roots of modular equations
+
+**Input**
+
+- $f$ be a polynomial of degree $d$,
+- $N$ an integer (of *unknown factorization*).
+
+**Output:** All *small integers* $w$ such that *$f(w) = 0 \bmod N$*.
+
+### Coppersmith's theorem
+
+All $w$ such that *$|w| < N^{1/d}$* can be found in time polynomial in
+$\log N$ and $d$.
+
+---
+
+# Application: RSA with stereotyped messages
+
+Consider an RSA implementation with $N=pq$ and with *small public key*
+(e.g.: $k_p=3$).
+
+Suppose *a portion $B$* of the cleartext $m$ is *already known*, say
+the high-order bits, so that
+
+$$m = 2^aB + x$$
+
+with $|x|<N^{1/3}$ unknown. Then, finding the small roots of the
+equation
+
+$$c = m^3 = (2^aB+x)^3 \mod N$$
+
+recovers the ciphertext.
+
+???
+
+Obvious for B = 0.
 
 ---
 
 # Coppersmith's intuition
 
+Let $|w|<X$, and consider the lattice $Λ$ spanned by the rows of $M$:
+
+$$M = \begin{pmatrix}
+1 & 0 & 0 & \cdots & 0 & f_0\\\\
+0 & X^{-1} & 0 & \cdots & 0 & f_1\\\\
+0 & 0 & X^{-2} & \cdots & 0 & f_2\\\\
+0 & 0 & 0 & \cdots & X^{-d} & f_d\\\\
+0 & 0 & 0 & \cdots & 0 & N
+\end{pmatrix}$$
+
+If $w$ is a solution, then $f(w) = yN$ for some $y$, then
+
+$$s=(1,w,\dots,w^d,-y)M = \left(1,w/X,\dots,(w/X)^d,0\right)$$
+
+is in $Λ$ and $|s|<\sqrt{d+1}$. If $s$ is small enough, LLL may find
+it.
+
+**However this does not work well.**
+
 ---
 
-# Application 1: RSA with stereotyped messages
+# Coppersmith's algorithm
+
+**Idea:** find a *small polynomial $g$* such that *$g(w)=0$ in $ℤ$*
+for any *small solution $w$ of $f \bmod N$*.
+
+Then *factor $g$ over $ℤ$*.
+
+### Translating to an integer lattice problem
+
+Fix a parameter $h$. Define
+
+$$g_{i,j}(x) = x^j N^{h-i} f^i(x) \qquad\qquad 0≤i<h, 0≤j<d.$$
+
+**Remark:** $N^h$ divides $g_{i,j}(w)$ for any root $w$ of $f$.
 
 ---
 
-# Application 2: RSA with partial knowledge
+Consider the lattice $Λ$ spanned by the coefficients of *$g_{i,j}(x)$*:
+
+$$\small\begin{pmatrix}
+N^h \\\\
+& \ddots\\\\
+& & N^h\\\\
+f_0N^{h-1} & & \cdots & N^{h-1} \\\\
+& \ddots & & & \ddots \\\\
+& & f_0N^{h-1} & & \cdots & N^{h-1} \\\\\\\\
+& \ddots \\\\
+f_0^{(h)} & & & & & & & \cdots & 1\\\\
+& \ddots & & & & & & & & \ddots\\\\
+\end{pmatrix}$$
+
+Vectors in $Λ ⟶$ polynomials $g$ such that $N^h | g(w)$.
+
+---
+
+**We want:** *$g(w)$ small* $⇔$ *$g$ small* in the *lattice* sense.
+
+Fix a bound *$|w|<X$*. Consider the lattice spanned by the
+coefficients of *$g_{i,j}(xX)$*:
+
+
+$$\tiny\begin{pmatrix}
+N^h \\\\
+& \ddots\\\\
+& & X^{d-1}N^h\\\\
+f_0N^{h-1} & & \cdots & X^dN^{h-1} \\\\
+& \ddots & & & \ddots \\\\
+& & X^{d-1}f_0N^{h-1} & & \cdots & X^{2d-1}N^{h-1} \\\\\\\\
+& \ddots \\\\
+f_0^{(h)} & & & & & & & \cdots & X^{dh}\\\\
+& \ddots & & & & & & & & \ddots\\\\
+\end{pmatrix}$$
+
+**Recall:**  $N^h|g(w)$.
+
+If $g$ is *small enough* (such that $g(w) < N^h$), then $g(w) = 0$ in
+$ℤ$.
+
+---
+
+# Slightly more generally
+
+### Theorem (Coppersmith, Howgrawe-Graham, May)
+
+Let $f$ be a polynomial of degree $d$, let $N$ be an integer. For any
+$0<β≤1$, all integers $w$ with
+
+$$|w| < N^{β^2/d}$$
+
+such that
+
+$$\gcd(f(w), N) ≥ N^β$$
+
+can be found in polynomial time in $d$ and $\log N$.
+
+---
+
+# Application: RSA with leaked bits
+
+Consider an RSA implementation with $N=pq$, with $p\sim q\sim N^{1/2}$.
+
+Suppose *half of the high order bits of $p$* is known (e.g., via side
+channel). Say $p = 2^aB + x$ with $|B|≥N^{1/4}$ and $x$ unknown.
+
+Take *$\beta = \frac{1}{2} + o(1)$* in the theorem, set
+
+$$f(x) = 2^aB + x.$$
+
+Coppersmith's algorithm finds $w$ such that *$|w|≤N^{1/4-o(1)}$* and
+
+$$\gcd(f(w), N) > N^{1/2+o(1)},$$
+
+then necessarily *$f(w)=p$*.
+
+???
+
+ALL w are found by the algorithm!
 
 ---
 
 # Other applications
 
+- $N = p^rq$ with large $r$. [Boneh, Durfee, Howgrave-Graham, 1999]().
+- $N = pq$ with fixed pattern padding.
+  [Brier, Clavier, Coron, Naccache, 2001]().
+- $N = pq$, with small secret CRT-exponents, or with $d < N^{0.29}$.
+  [Bleichenbacher and May, 2006. Boneh and Durfee, 1999]().
+- $N = pq$ combined attack on CRT-RSA.
+  [Barbu, Battistello, Dabosville, Giraud, Renault, Renner, Zeitoun, 2013]().
+- ...
+  
 ---
 
-# Coppersmith's theorem
+# Integers vs polynomials
 
----
-
-# Howegrawe-..., May
-
----
-
-# Example
-
----
-
-# Finding small roots of bivariate polynomials?
-
----
-
-# Analogies between integers and polynomials
-
----
-
-# Small elements in $\F_p(z)$
-
----
-
-# Coppersmith's method for $\F_p(z)$
+<table id="int-vs-poly">
+<tr><th>$ℤ$</th><th>$k[X]$</th></tr>
+<tr><td>Primes</td><td>Irreducible polynomials</td></tr>
+<tr><td>Size</td><td>Degree</td></tr>
+<tr><td>Integer lattices</td><td>Polynomial lattices</td></tr>
+<tr><td>Number fields</td><td>Function fields</td></tr>
+<tr><td>.green[Euclidean division]</td><td>.green[Euclidean division]</td></tr>
+<tr><td>.green[GCD]</td><td>.green[GCD]</td></tr>
+<tr><td>.red[Factorization]</td><td>.green[Factorization]</td></tr>
+<tr><td>.red[Discrete log in $𝔽_p$]</td><td>.orange[Discrete log in $𝔽_2[X]/I(X)$]</td></tr>
+</table>
 
 ---
 
-# Reed-Solomon codes / approximate polynomial interpolation
+# Polynomial lattices
+
+Let $k$ be a field, and let $k[z]$ be the polynomial ring on $k$.
+
+**Definition:** A *polynomial lattice* is a free $k[z]$-module of
+finite rank.
+
+- It is an *abelian group*;
+- Elements of $k[z]$ act as *scalar multiplication*;
+- It has a *finite basis* (it is isomorphic to $k[z]^n$).
+
+## Short vectors
+
+Define the *length* (or degree) of a vector $v(z)$ in $k[z]^n$ as
+
+$$\deg (v_1(z), v_2(z), \dots, v_n(z)) = \max_i \deg v_i(z).$$
+
+It is a *non-Archimedean norm*.
 
 ---
 
-# Reed-Solomon decoding via Coppersmith's method
+# Polynomial lattice reduction
+
+## Row-reduced bases
+
+**Definition:** A basis $V = (v_1,\dots,v_n)$ of a polynomial lattice
+$Λ$ is said to be *row-reduced* if
+
+$$\deg V \triangleq \sum_i \deg v_i = \deg\det(Λ),$$
+
+or, equivalently, if $\deg V$ is minimal among all bases of $V$.
+
+### Theorem (see [Romain's talk]({{ site.baseurl }}/abstracts/#Romain Lebreton))
+
+- A row reduced basis always contains a *shortest vector* of $Λ$.
+- A row reduced basis can be computed in time $\tilde{O}(n^ω \max\deg v_i)$.
 
 ---
 
-# Further generalizations of Coppersmith's method
+# Coppersmith's method for $k(z)$
 
+### Theorem (Alekhnovic, Bernstein, Boneh, Coppersmith, ..., [Cohn–Heninger 2011](#references))
 
+Let $f(x)$ be a polynomial of degree $d$, with coefficients in
+$k[z]/N(z)$. Let $n=\deg_z N$. For any $0<β≤1$, all polynomials $w(z)$
+with
 
-<!--  LocalWords:  Coppersmith's RSA bivariate
- -->
+$$\deg_z w < \frac{β^2 n}{d}$$
+
+such that
+
+$$\deg_z\gcd\bigl(f(w(z)), N(z)\bigr) ≥ βn$$
+
+can be found in polynomial time in $d$ and $n$.
+
+???
+
+In principle, since $N$ can be factored efficiently, all roots of $f$
+could be described
+
+---
+
+# Reed-Solomon codes
+
+Let $𝔽_q$ be a finite field, let *$x_1,\dots,x_n\in 𝔽_q$*. A
+*Reed-Solomon code* of length $n$ and dimension $k$ is the space
+
+$$RS(n,k) = \\{(w(x_1), \dots, w(x_n)) \;\mid\; w(z)\in 𝔽_q[z]_k \\},$$
+
+where $𝔽_q[z]_k$ is the space of all polynomials of degree at most
+$k$.
+
+### Reed-Solomon decoding problem
+
+Given a list of points *$(y_1,\dots,y_n)$*, find an element $w(z)$ of
+$𝔽_q[z]_k$ such that
+
+$$w(x_i) = y_i$$
+
+for at least $n-e$ pairs $(x_i,y_i)$ (we will determine $e$ later).
+
+---
+
+# Decoding via Coppersmith's method
+
+1. Set *$N(z) = \prod_i (z-x_i)$*.
+
+1. Construct (by interpolation) a polynomial $f(x)$ with coefficients
+   in $𝔽_q[z]/N(z)$ such that for any $i$
+   
+   $$f(x) = x - y_i \mod (z-x_i).$$
+
+1. Suppose *$w(x_i) = y_i$*, then
+   
+   $$f(w(z)) = 0 \bmod (z-x_i).$$
+   
+   Find, by Coopersmith's algorithm. a $w(z)$ of degree at most $k$
+   satisfying this condition for at least $n-e$ of the $x_i$,
+   i.e. such that
+   
+   $$\deg_z \gcd\bigl(f(w(z)), N(z)\bigr) ≥ n-e.$$
+
+**Remark:** The theorem then implies *$e<n-\sqrt{nk}$*.
+
+---
+
+# More on Coppersmith's method
+
+- Generalization to function fields.  [Cohn, Heninger 2011](#references) (see
+  also [Johan's talk]({{ site.baseurl }}/abstracts/#Johan S. R. Nielsen)).
+
+- Generalization to number fields.
+  [Biasse, Quintin 2012](https://hal.archives-ouvertes.fr/file/index/docid/712441/filename/bare_conf.pdf),
+  [Cohn, Heninger 2011](#references).
+
+- Faster algorithm via improved LLL reduction.
+  [Bi, Coron, Faugère, Nguyen, Renault, Zeitoun 2014](https://hal.inria.fr/hal-00926902).
+
+- ...
+
+---
+
+# References
+
+- A. K. Lenstra, H. W. Lenstra, Jr., L. Lovász.
+  [*Factoring polynomials with rational coefficients](http://infoscience.epfl.ch/record/164484/files/nscan4.PDF). Math. Ann. 1982.
+
+- D. Coppersmith.
+  [*Small solutions to polynomial equations, and low exponent RSA vulnerabilities*](http://www.di.ens.fr/~fouque/ens-rennes/coppersmith.pdf),
+  Journal of Cryptology 1997.
+
+- N. Howgrave-Graham.
+  [*Finding small roots of univariate modular equations revisited*](http://link.springer.com/chapter/10.1007/BFb0024458).
+  IMA 1997.
+
+- A. May.
+  [*Using LLL-reduction for solving RSA and factorization problems: A survey*](http://www.researchgate.net/publication/227200196_Using_LLL-Reduction_for_Solving_RSA_and_Factorization_Problems/file/9c9605208c2fa81b79.pdf). 2010.
+
+- H. Cohn, N. Heninger.
+  [*Ideal forms of Coppersmith's theorem and Guruswami–Sudan list decoding*](http://arxiv.org/abs/1008.1284).
+  ICS 2011.
+
+---
+class: center, middle
+
+# Thanks
+
+![](data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAAACAAAAAaCAMAAADhRa4NAAAABGdBTUEAALGPC/xhBQAAAAFzUkdC
+AK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAX1QTFRF
+XqndAAAAXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqnd
+XqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqnd
+XqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqnd
+XqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqnd
+XqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqnd
+XqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqnd
+XqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqndXqnd////bd/oggAAAH10Uk5TAAABHYDV
++f3loTcJOBEcWwfE4mUoXLCUCF3xcAQp0fXo2C4DkPN7C51koCIr5u/uwirTYhBX/MEfac0hG9Dc
+o2pAI2/+tQVV561rl/iYkvt2VEsSv9093qRTFEntwzHb8ImuDJ8yDmxYUc7yUL366mcTePYCP5uL
+vjB/t8XINO3MAAAAAWJLR0R+P7hBcwAAAAlwSFlzAAAuIwAALiMBeKU/dgAAAXpJREFUKM91k+k7
+AlEYxU+DmUSWQrIURggtshRCEUVZky1bluxr2d3/3cyYMbfHzHnmy7znN++9951zATAwUALKyitY
+zlhpYoCqajNQU1sH2jfVc0SUxdrQ2GRrBuwtrW1Q/XYHkeXs4Dq7eKCbuHp6ISNo6yOqLK1uK5h+
+Qtj+AZnAoIcCvD7/kNhBUGB4REIwOkYBJCj4sEslNugOCethnPYnJoUKwlO/b2PTM5Ho7FyMAuYX
+IGybifuUQszpSdDAIi8A/JI1mSLaWobYYYV4V3WANQlYZ3VsktqAOLr0ph6QCUkAtrZ1gB1eBARk
+K6i5SmoXEmDAXja5rwEcpKXZCs/h0bHGOVJ2KACfi2k0ODmV/p8Epc/+d8icQwWQv5hwlTLeSyUA
+cpDMV9e0f3PBKxH69fO3d/eU//D4l0Kkn54mo8/+Av39dbaopvTl1WEscUniLQQ152DCkXefesxC
+IPfB0xdFHHX+5fMr4+K4gvHbFq8pltwjww+1Xu3DdbjjxwAAACV0RVh0ZGF0ZTpjcmVhdGUAMjAx
+NC0wOC0yMFQxOTo0MjowNiswMjowMJwq9B0AAAAldEVYdGRhdGU6bW9kaWZ5ADIwMTMtMTAtMzFU
+MDE6NDE6NDErMDE6MDCyxRhyAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAA
+AABJRU5ErkJggg==)
+ [@luca_defeo](https://twitter.com/luca_defeo)
