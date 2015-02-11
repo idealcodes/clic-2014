@@ -7,7 +7,7 @@ title: Abstracts
   {% for post in site.abstracts %}
   <div class="post">
     <h2 class="post-title" id="{{ post.author }}">
-      <a href="#{{ post.author }}">{{ post.title }}</a>
+      <a href="abstracts/#{{ post.author }}">{{ post.title }}</a>
       <br/>
       <small>by <a href="{{ post.website }}">{{ post.author }}</a></small>
       <span class="resources">
@@ -15,7 +15,7 @@ title: Abstracts
       [<a href="{{ post.slides }}">slides</a>]
       {% endif %}
       {% if post.video %}
-      [<a href="{{ post.video }}">video</a>]
+      [<a href="{{ post.video }}" target="_blank">video</a>]
       {% endif %}
       </span>
     </h2>

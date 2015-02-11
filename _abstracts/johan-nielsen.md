@@ -4,6 +4,7 @@ title:  Fast Decoding of Hermitian Codes Using <script type="math/tex">𝔽[x]</
 author: Johan S. R. Nielsen
 website: http://jsrn.dk/
 slides: slides/jsrn_2014_12_clic_hermitian.svg
+video: http://vimeo.com/defeo/clic2014-johan
 affiliation: INRIA Saclay
 ---
 Joint work with Peter Beelen.

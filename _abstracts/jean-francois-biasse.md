@@ -3,6 +3,7 @@ layout: abstract
 title: Ideal lattices in number theory and in cryptology
 author: Jean-François Biasse
 slides: slides/jean-francois-biasse.pdf
+video: http://vimeo.com/defeo/clic2014-jean-francois
 website: http://www.lix.polytechnique.fr/Labo/Jean-Francois.Biasse
 affiliation: UWaterloo, UCalgary
 ---

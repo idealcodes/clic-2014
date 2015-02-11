@@ -4,6 +4,7 @@ title: "Crash course on Order Bases : Theory and Algorithms"
 author: Romain Lebreton
 affiliation: UMontpellier 2
 slides: slides/romain-lebreton.pdf
+video: http://vimeo.com/defeo/clic2014-romain
 website: http://www.lirmm.fr/~lebreton/
 ---
 

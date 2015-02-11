@@ -4,6 +4,7 @@ title: Coppersmith's method and generalizations
 author: Luca De Feo
 affiliation: UVSQ
 slides: slides/luca-de-feo/
+video: http://vimeo.com/defeo/clic2014-luca
 website: http://defeo.lu/
 ---
 
